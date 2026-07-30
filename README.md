@@ -51,7 +51,21 @@ If writing feels vaguely off and you can't say why, it's usually one of these. E
 
 delve, leverage, utilize, foster, robust, seamless, streamline, empower, cutting-edge, tapestry, realm, paradigm shift, game changer, meticulous, transformative, elevate, harness, ever-evolving, this changes everything.
 
+Two more are handled differently, because they are real words a writer may legitimately own: **idempotent** and **defensible**. The skill will never introduce them into your draft, and it will never touch them if you wrote them yourself. Where a model would reach for one, write the plain version: "running it twice is safe," or "this holds up under scrutiny."
+
 Plus: emoji headings, bold sprinkled mid-sentence, bullet lists where two sentences would do, "I hope this helps," and a dozen more in `SKILL.md`.
+
+## Install
+
+Paste this into Claude Code, Codex, or another harness:
+
+> Install this skill globally: https://github.com/westonhancock/unslop
+
+Or clone it into wherever your harness keeps skills:
+
+```bash
+git clone https://github.com/westonhancock/unslop.git ~/.claude/skills/unslop
+```
 
 ## Why another one
 
@@ -74,18 +88,6 @@ Unslop keeps no-ai-slop's restraint and eval loop, adds humanizer's pattern cove
 Guess whether AI wrote something. Detect mode names the pattern, quotes the line, and gives the fix. It does not score the draft or claim authorship. Detectors guess; named patterns are evidence you can check.
 
 Change facts. A voice pass never alters or invents a fact, number, date, quote, source, or citation. An edit that changes what the text asserts is a content decision, and it gets flagged rather than folded in.
-
-## Install
-
-Paste this into Claude Code, Codex, or another harness:
-
-> Install this skill globally: https://github.com/westonhancock/unslop
-
-Or clone it into wherever your harness keeps skills:
-
-```bash
-git clone https://github.com/westonhancock/unslop.git ~/.claude/skills/unslop
-```
 
 ## Use
 
