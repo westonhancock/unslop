@@ -25,6 +25,7 @@ If writing feels vaguely off and you can't say why, it's usually one of these. E
 | Throat-clearing | "Here's the thing. Let me be clear." | Say the thing. |
 | Announcing | "Let's dive in. Here's what you need to know." | Just start. |
 | Secret-knowledge setup | "What nobody tells you about pricing..." | "Most teams price too low at launch." |
+| The part that | "The part that makes it work is the eval file." | "It works because a separate agent grades the output." |
 | The dramatic colon | "The best part: it learns." | "It gets better the more you use it." |
 | Fake candor | "Honestly? It depends." | "It depends on how often you'll use it." |
 
@@ -52,6 +53,8 @@ If writing feels vaguely off and you can't say why, it's usually one of these. E
 delve, leverage, utilize, foster, robust, seamless, streamline, empower, cutting-edge, tapestry, realm, paradigm shift, game changer, meticulous, transformative, elevate, harness, ever-evolving, this changes everything.
 
 Two more are handled differently, because they are real words a writer may legitimately own: **idempotent** and **defensible**. The skill will never introduce them into your draft, and it will never touch them if you wrote them yourself. Where a model would reach for one, write the plain version: "running it twice is safe," or "this holds up under scrutiny."
+
+**shape** is banned only as a metaphor. A process, an offering, or a strategy has no shape, so name what you mean: the structure, the sequence, the steps, the layout. Literal shapes, geometry, and visual design keep the word.
 
 Plus: emoji headings, bold sprinkled mid-sentence, bullet lists where two sentences would do, "I hope this helps," and a dozen more in `SKILL.md`.
 

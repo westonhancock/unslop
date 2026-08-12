@@ -36,11 +36,12 @@ For detect requests, skip to the Detect section.
 1. Are banned words, empty filler phrases, often-empty adverbs, and inflated claims removed unless quoted as examples?
 2. Were watch-list words cut only where they were doing no work, rather than scrubbed on sight?
 3. Were "idempotent" and "defensible" left alone if the writer used them, and never introduced if they weren't already there?
+4. Is every metaphorical "shape" gone, replaced with the actual structure, sequence, steps, or pattern being described? Literal shapes stay.
 
 ## Patterns
 
 1. Are binary contrasts, tailing negations, negative listings, rhetorical setups, and throat-clearing openers removed?
-2. Are faux-insight setups, signposting, colon reveals, and fake-candor openers removed?
+2. Are faux-insight setups, "the part that" frames, signposting, colon reveals, and fake-candor openers removed?
 3. Are superficial `-ing` analyses, fake-strong verbs, synonym cycling, false ranges, and aphorism formulas fixed?
 4. Are importance puffery, weasel attribution, and speculative gap-filling replaced with plain facts and named sources, or flagged when no source exists?
 5. Are fake-profound kicker lines *deleted* rather than rewritten into better metaphors?
@@ -59,7 +60,7 @@ For detect requests, skip to the Detect section.
 
 ## Final read
 
-1. Does the draft avoid robotic symmetry, repeated sentence shapes, and stacked punchy fragments?
+1. Does the draft avoid robotic symmetry, repeated sentence patterns, and stacked punchy fragments?
 2. Does it avoid the de-slopping metronome: a short punchy line alternating with a long one in every paragraph?
 3. Are sections and paragraphs genuinely uneven in length, rather than a uniform template?
 4. Would it sound natural read aloud to a sharp colleague?

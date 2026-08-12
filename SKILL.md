@@ -50,7 +50,7 @@ Without a sample, infer voice from the draft itself and use the defaults below.
 - **Make the minimum effective edit.** Fix AI patterns, errors, repetition, and unclear passages. Leave strong human sentences alone. A rough draft with a real voice should still sound like the same person afterward.
 - **Keep the writer's meaning.** Don't invent claims, examples, stats, quotes, or opinions. If something is unclear, ask. See The iron rule below.
 - **Lead with the point when the setup adds nothing.** Cut generic throat-clearing. Keep a personal aside, story, or admission when it creates context, tension, or character.
-- **Front-load only when it improves clarity.** Do not force every section and paragraph into the same point-detail-background shape.
+- **Front-load only when it improves clarity.** Do not force every section and paragraph into the same point-detail-background order.
 - **Open it up, don't dumb it down.** Keep the substance, nuance, and precision. Strip only what makes it hard to read: jargon, long sentences, abstract nouns, tangled structure.
 - **Use active voice with human subjects.** "The team shipped it Tuesday" beats "the decision emerged." Never let inanimate things do human verbs.
 - **Make every sentence earn its place.** Ask what each sentence knows that the one before it didn't. If the answer is "nothing, it restates or decorates," cut or merge it. Keep "I think," "maybe," or "to be honest" when they express real uncertainty or the writer's spoken rhythm.
@@ -67,6 +67,8 @@ Without a sample, infer voice from the draft itself and use the defaults below.
 **Banned outright:** delve, foster, leverage, utilize, facilitate, empower, streamline, robust, cutting-edge, paradigm shift, game changer, this is huge, this changes everything, tapestry, realm, beacon, multifaceted, meticulous, intricate, paramount, transformative, elevate, embark, supercharge, harness, ever-evolving.
 
 **Banned unless the writer used them first or asked for them:** idempotent, defensible. Both are real words that a writer may own; neither is yours to introduce. If the draft doesn't have them, don't add them. If the draft does have them, leave them alone. Where you would reach for one, write the plain version: "running it twice is safe," "this holds up under scrutiny."
+
+**Banned as metaphor:** shape, for anything that has no literal shape. "The shape of the process," "the shape of the offering," "what shape should this take," "shaped like a workshop," "sentence shapes." It sounds analytical while committing to nothing. Name the actual thing: the structure, the sequence, the steps, the layout, what it includes, how it's put together, the sentence pattern. Keep "shape" for physical objects, geometry, visual design, and code identifiers.
 
 **Watch, don't ban** (AI-frequent, but legitimate in the right sentence): additionally, align with, crucial, emphasize, enduring, enhance, garner, highlight (verb), interplay, key (adjective), landscape (abstract), pivotal, showcase, testament, underscore, valuable, vibrant. Cut when they're doing no work. One *however* is not a tell.
 
@@ -89,6 +91,8 @@ Without a sample, infer voice from the draft itself and use the defaults below.
 **Conversational fake-candor.** "Honestly?" "Look," "Real talk," "Let's be honest" used as a standalone theatrical pause before an ordinary claim. The tell is the pause-and-reveal, not the word. Mid-sentence "honestly" is fine.
 
 **Faux-insight setups.** "This is the part most people skip," "What nobody tells you," "The part everyone misses." These flatter the writer as the lone expert. Cut the setup; let the claim stand.
+
+**"The part that."** "The part that makes it work," "the part that matters," "the part that took longest," "the part nobody talks about," "the part I keep coming back to." The frame delays the claim and implies everything else was filler. Say the claim outright: "It works because a separate agent grades the output." Cut the frame even when the sentence after it is true and useful. Plain uses of "part" are fine ("the second part of the migration").
 
 **Signposting.** "Let's dive in," "let's break this down," "here's what you need to know," "now let's look at." Announcing what you're about to do instead of doing it.
 
@@ -114,7 +118,7 @@ Without a sample, infer voice from the draft itself and use the defaults below.
 
 **Dramatic fragmentation.** "X. And Y. And Z." or "That's it. That's the whole thing." A single short sentence for emphasis is fine; a run of them is engineered drama.
 
-**Robotic rhythm.** Repeated sentence shapes and identical paragraph builds. Also watch the de-slopping tic: alternating one short punchy line with one long line in every paragraph is its own metronome. Aim for genuine unevenness. Read it aloud.
+**Robotic rhythm.** Repeated sentence patterns and identical paragraph builds. Also watch the de-slopping tic: alternating one short punchy line with one long line in every paragraph is its own metronome. Aim for genuine unevenness. Read it aloud.
 
 **Rhetorical setups.** "What if I told you," "Think about it:", "Plot twist:", and self-answered "Question? Answer." pairs.
 
