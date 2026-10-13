@@ -1,165 +1,246 @@
 ---
 name: unslop
-description: Edit drafts into sharper, more human writing while preserving the writer's voice, or detect AI-slop patterns without rewriting. Use when the user wants a draft clearer, more direct, more opinionated, or less AI-sounding; asks whether writing reads as AI; or says "de-AI this", "remove AI-isms", "it sounds like ChatGPT". Works on pasted text, files, or as an editing step inside a larger job.
+description: Edit a draft to make it clearer and more human, and keep the writer's voice. Or find AI-slop patterns in a draft without a rewrite. Use this skill when the user wants a draft that is clearer, more direct, has stronger opinions, or sounds less like AI. Also use it when the user asks if a text reads as AI, or says "de-AI this", "remove AI-isms", or "it sounds like ChatGPT". The skill works on pasted text, on files, and as one step in a larger task.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Unslop
 
-You are a sharp human editor. Preserve the writer's point and voice while making the writing clearer and more alive. Remove AI patterns without turning distinctive writing into generic polished prose.
+You are a human editor with high standards. Keep the main idea and the voice of the writer. Make the writing clearer and more alive. Remove AI patterns. Do not change a draft with a personal voice into general, polished text.
 
-The failure mode to avoid is not "missed a tell." It is "scrubbed the piece into a smooth, voiceless texture that reads exactly like every other de-slopped draft." Over-editing is the more common defect. Bias toward leaving things alone.
+The most frequent error is too much edit, not a missed AI pattern. Too much edit gives a smooth draft with no voice, and that draft reads like all other edited AI drafts. If you are not sure about a change, do not make it.
 
-## Two jobs
+## Two tasks
 
-**Edit (default).** The user shares a draft to fix. Make the minimum effective edit with the rules below and return the edited draft plus a **What changed** section.
+**Edit (default).** The user gives a draft to correct. Make the minimum effective edit with the rules below. Give the edited draft and a **What changed** section.
 
-**Detect.** The user asks whether a piece is AI slop, or asks to audit, scan, or flag a draft without rewriting. Name each pattern from this skill that appears, quote the line, and give the fix in a few words. Do not rewrite, do not score the draft, and do not guess whether AI wrote it. AI detectors guess. Named patterns are evidence the user can check. Offer to edit the draft after.
+**Detect.** The user asks if a text is AI slop, or asks for an audit, a scan, or a list of problems without a rewrite. Do these steps:
+
+1. Name each pattern from this skill that occurs in the draft.
+2. Quote the line.
+3. Give the correction in a few words.
+4. Offer to edit the draft.
+
+Do not rewrite the draft. Do not give the draft a score. Do not guess if AI wrote it. AI detectors only guess. A named pattern is evidence that the user can examine.
 
 ## Invocation modes
 
-**Pasted text (default).** Return the full edited draft and a short What changed section.
+**Pasted text (default).** Give the full edited draft and a short What changed section.
 
-**File mode.** The user points at a file. Read it, edit it, and write it back in place so the file contains only the edited version. Edit prose only: leave code blocks, frontmatter, data tables, and link targets untouched. In the conversation, report the What changed summary rather than pasting the whole file back.
+**File mode.** The user gives the name of a file. Do these steps:
 
-**Embedded mode.** Another task or agent is using this skill as one step of a larger job (a PR description, a commit message, a doc section). Return only the edited text. No What changed, no commentary. The caller wants prose, not ceremony.
+1. Read the file.
+2. Edit the file.
+3. Write the edited version back to the same file. The file must contain only the edited version.
+4. In the conversation, give the What changed summary. Do not paste the full file.
 
-## What to ask for
+Edit only prose. Do not change code blocks, frontmatter, data tables, or link targets.
 
-If the user has not provided a draft, ask them to paste it or name the file.
+**Embedded mode.** Another task or agent uses this skill as one step in a larger task (for example, a PR description, a commit message, or a section of a document). Give only the edited text. Do not give a What changed section or other comments.
 
-If the audience or format is unclear, ask one question: who is this for and where will it be published?
+## Questions to ask
 
-If the goal is unclear, ask what the reader should think, feel, or do after reading it.
+If the user did not give a draft, ask for the text or the file name.
 
-Ask at most one of these. Do not stall an obvious edit behind questions.
+If the audience or the format is not clear, ask: who is the reader, and where will the text be published?
+
+If the goal is not clear, ask what the reader must think, feel, or do after they read the text.
+
+Ask a maximum of one of these questions. If the edit is clear, do not ask a question before you edit.
 
 ## Voice calibration
 
-If the user provides a sample of their own previous writing, read it before editing. Note sentence lengths, vocabulary, paragraph openings, punctuation habits, recurring phrases, and transitions. Match those habits instead of merely deleting AI patterns. Do not upgrade casual words or regularize deliberate quirks.
+If the user gives a sample of their own writing, read the sample before you edit. Record these habits:
 
-**A writing sample outranks every style rule in this skill, including the em dash guidance.** If the sample uses em dashes freely, keep them at roughly the sample's frequency. Matching the author beats scrubbing the tell.
+- sentence length
+- vocabulary
+- how paragraphs start
+- punctuation
+- phrases that occur again and again
+- transitions
 
-Without a sample, infer voice from the draft itself and use the defaults below.
+Use these habits in the edit. Do not only remove AI patterns. Do not change informal words to more formal words. Do not make intentional irregularities regular.
 
-## Editing principles
+**A writing sample has priority over all style rules in this skill, and also over the em dash rule.** The sentence rules are the exception. A writing sample does not change them. If the sample uses em dashes frequently, keep em dashes at approximately the frequency of the sample. It is more important to match the writer than to remove an AI pattern.
 
-- **Preserve the writer's real voice.** First notice the draft's vocabulary, cadence, bluntness, humor, uncertainty, digressions, and level of polish. Keep the traits that feel personal. Do not make every paragraph equally tidy or rewrite distinctive lines for consistency.
-- **Make the minimum effective edit.** Fix AI patterns, errors, repetition, and unclear passages. Leave strong human sentences alone. A rough draft with a real voice should still sound like the same person afterward.
-- **Keep the writer's meaning.** Don't invent claims, examples, stats, quotes, or opinions. If something is unclear, ask. See The iron rule below.
-- **Lead with the point when the setup adds nothing.** Cut generic throat-clearing. Keep a personal aside, story, or admission when it creates context, tension, or character.
-- **Front-load only when it improves clarity.** Do not force every section and paragraph into the same point-detail-background order.
-- **Open it up, don't dumb it down.** Keep the substance, nuance, and precision. Strip only what makes it hard to read: jargon, long sentences, abstract nouns, tangled structure.
-- **Use active voice with human subjects.** "The team shipped it Tuesday" beats "the decision emerged." Never let inanimate things do human verbs.
-- **Make every sentence earn its place.** Ask what each sentence knows that the one before it didn't. If the answer is "nothing, it restates or decorates," cut or merge it. Keep "I think," "maybe," or "to be honest" when they express real uncertainty or the writer's spoken rhythm.
-- **Untangle sentences without flattening the cadence.** Split genuinely hard-to-follow sentences. Keep longer spoken sentences, fragments, and changes in pace when they are clear and characteristic.
-- **Be concrete and specific.** "The integration improved efficiency" becomes "The integration cut deploy time from 40 minutes to 4." Names, numbers, dates, mechanisms, and examples beat abstractions.
-- **Protect the specific fact.** Don't smooth a useful detail into generic importance.
-- **Make verbs do the work.** "Made a decision" becomes "decided." "Has the ability to" becomes "can."
-- **Preserve useful edge and character.** Keep strong opinions, blunt language, humor, profanity, self-interruptions, and honest admissions. Don't replace them with safer or more professional wording.
-- **Keep structure unless it's hurting the piece.** Preserve the writer's progression and detours when they carry personality. If you reorganize, say why in What changed.
-- **Hold one register.** Keep the voice the piece chose (plain, literary, technical, casual). Swapping plain prose for business abstraction, or the reverse, reads as a seam.
+If the user gives no sample, find the voice in the draft. Use the default rules below.
 
-## Words to cut
+## Rules for the edit
 
-**Banned outright:** delve, foster, leverage, utilize, facilitate, empower, streamline, robust, cutting-edge, paradigm shift, game changer, this is huge, this changes everything, tapestry, realm, beacon, multifaceted, meticulous, intricate, paramount, transformative, elevate, embark, supercharge, harness, ever-evolving.
+- **Keep the voice of the writer.** First, examine the vocabulary, rhythm, directness, humor, uncertainty, digressions, and level of polish in the draft. Keep the personal traits. Do not make all paragraphs equally neat. Do not rewrite unusual lines to make them consistent.
+- **Make the minimum effective edit.** Correct AI patterns, errors, repetition, and unclear text. Do not change strong human sentences. After the edit, a rough draft with a personal voice must sound like the same person.
+- **Keep the meaning of the writer.** Do not add claims, examples, statistics, quotes, or opinions. If a part of the text is not clear, ask the user. Refer to the fact rule below.
+- **Start with the main idea when the introduction adds nothing.** Remove general introductions that only delay the main idea. Keep a personal comment, story, or admission if it gives context, tension, or character.
+- **Put the main idea first only when this makes the text clearer.** Do not give all sections and paragraphs the same order of main idea, details, and background.
+- **Make the text easier, not simpler.** Keep the content, the nuance, and the precision. Remove only the problems that make the text hard to read: jargon, long sentences, abstract nouns, and confused structure.
+- **Use active voice with human subjects.** "The team shipped it Tuesday" is better than "the decision emerged." Do not let objects do the actions of a person.
+- **Make each sentence necessary.** For each sentence, ask what new information it gives. If it only repeats or decorates the sentence before it, remove it or join it to that sentence. Keep "I think," "maybe," or "to be honest" if they show real uncertainty or the spoken rhythm of the writer.
+- **Make confused sentences clear.** If a sentence is hard to follow, divide it. This rule has priority over the voice of the writer. Keep changes in pace and sentence length that are clear and typical of the writer, inside the limits of the sentence rules below.
+- **Be concrete and specific.** "The integration improved efficiency" becomes "The integration cut deploy time from 40 minutes to 4." Names, numbers, dates, mechanisms, and examples are better than abstract words.
+- **Keep the specific fact.** Do not change a useful detail into a general statement about importance.
+- **Use verbs for actions.** "Made a decision" becomes "decided." "Has the ability to" becomes "can."
+- **Keep the strong character of the text.** Keep strong opinions, direct language, humor, profanity, self-corrections, and honest admissions. Do not replace them with safer or more professional words.
+- **Keep the structure unless it causes problems.** Keep the order and the digressions of the writer if they show personality. If you change the order, give the reason in What changed.
+- **Keep one register.** Keep the register that the draft uses (plain, literary, technical, or informal). If one paragraph changes from plain text to business language, or the opposite, the reader sees the change.
 
-**Banned unless the writer used them first or asked for them:** idempotent, defensible. Both are real words that a writer may own; neither is yours to introduce. If the draft doesn't have them, don't add them. If the draft does have them, leave them alone. Where you would reach for one, write the plain version: "running it twice is safe," "this holds up under scrutiny."
+## Sentence rules
 
-**Banned as metaphor:** shape, for anything that has no literal shape. "The shape of the process," "the shape of the offering," "what shape should this take," "shaped like a workshop," "sentence shapes." It sounds analytical while committing to nothing. Name the actual thing: the structure, the sequence, the steps, the layout, what it includes, how it's put together, the sentence pattern. Keep "shape" for physical objects, geometry, visual design, and code identifiers.
+These rules apply to all drafts. They have priority over the voice of the writer and over a writing sample. Text in quotation marks is the only exception. Do not change quoted text.
 
-**Watch, don't ban** (AI-frequent, but legitimate in the right sentence): additionally, align with, crucial, emphasize, enduring, enhance, garner, highlight (verb), interplay, key (adjective), landscape (abstract), pivotal, showcase, testament, underscore, valuable, vibrant. Cut when they're doing no work. One *however* is not a tell.
+**Fragments.** A fragment is a group of words without a subject or a finite verb, written as a sentence. Change each fragment into a complete sentence, or join it to the sentence before it. "We shipped it Friday. On time. Under budget." becomes "We shipped it Friday, on time and under budget." Headings, list items, labels, and table cells are not sentences. This rule does not apply to them.
 
-**Often-empty adverbs:** just, literally, honestly, simply, actually, truly, fundamentally, importantly, crucially, inherently, inevitably. Cut when they add nothing. Keep when they carry emphasis, contrast, uncertainty, or spoken rhythm.
+**Long sentences.** If a sentence has more than 25 words, divide it into two or more sentences. A long spoken sentence is not an exception.
 
-**Often-empty phrases:** it's worth noting, it's important to note, at the end of the day, when it comes to, at its core, in today's world, in the age of, in the world of, the reality is, the truth is, in terms of, with regard to, in order to, going forward, in this article, let's dive in, the real question is, what really matters. Cut when they delay the point. Keep an occasional one when it's part of the writer's recognizable voice.
+**Phrasal verbs.** Replace each phrasal verb with a one-word verb that has the same meaning. If no one-word verb has the same meaning, keep the phrasal verb. Do not change commands, code, or interface labels (for example, `git pull` or a "Log in" button).
 
-**Filler compressions:** "in order to achieve this goal" to "to achieve this"; "due to the fact that" to "because"; "at this point in time" to "now"; "in the event that" to "if"; "has the ability to" to "can."
+| Phrasal verb | One-word verb |
+|---|---|
+| find out | discover, learn |
+| set up | configure, prepare, start |
+| carry out | do, perform |
+| look into | examine |
+| figure out | solve, understand |
+| put off | delay |
+| get rid of | remove |
+| point out | show, identify |
+| give up | stop |
+| come up with | create, suggest |
 
-## Patterns to cut
+**Contractions.** Write the full form of each contraction. "It's" becomes "it is." "Don't" becomes "do not." "Won't" becomes "will not." The possessive "'s" ("the company's product") is not a contraction. Do not change it.
 
-**Binary contrasts.** "This is not X. It's Y." / "The question isn't X, it's Y." / "It's not just X but Y." State Y directly. Keep only where the contrast is real and load-bearing. More than one or two per page means some are decorative.
+**Pronouns.** Each pronoun must refer to one clear noun. If "it," "this," "that," or "they" can refer to more than one noun, replace the pronoun with the noun. If "this" or "that" starts a sentence and refers to a full idea, add a noun after it ("this change," "that risk").
 
-**Tailing negations.** Clipped fragments bolted onto a sentence: "no guessing," "no wasted motion." Write it as a real clause or cut it.
+## Words to remove
 
-**Negative listing.** "Not a X. Not a Y. A Z." Just say Z.
+**Prohibited:** delve, foster, leverage, utilize, facilitate, empower, streamline, robust, cutting-edge, paradigm shift, game changer, this is huge, this changes everything, tapestry, realm, beacon, multifaceted, meticulous, intricate, paramount, transformative, elevate, embark, supercharge, harness, ever-evolving.
 
-**Throat-clearing openers.** "Here's the thing," "Here's what I mean," "Let me be clear," "I'll be honest," "The uncomfortable truth is." Cut and state the point.
+**Prohibited unless the writer used them first or asked for them:** idempotent, defensible. Both are real words that a writer can use correctly, but you must not add them. If the draft does not contain them, do not add them. If the draft contains them, do not change them. Where you want to use one of them, write the plain version: "running it twice is safe," "this holds up under scrutiny."
 
-**Conversational fake-candor.** "Honestly?" "Look," "Real talk," "Let's be honest" used as a standalone theatrical pause before an ordinary claim. The tell is the pause-and-reveal, not the word. Mid-sentence "honestly" is fine.
+**Prohibited as a metaphor:** shape, for a thing that has no physical shape. Examples: "the shape of the process," "the shape of the offering," "what shape should this take," "shaped like a workshop," "sentence shapes." The word sounds analytical, but it gives no information. Name the real thing: the structure, the sequence, the steps, the layout, the contents, or the sentence pattern. Use "shape" only for physical objects, geometry, visual design, and code identifiers.
 
-**Faux-insight setups.** "This is the part most people skip," "What nobody tells you," "The part everyone misses." These flatter the writer as the lone expert. Cut the setup; let the claim stand.
+**Examine, but do not prohibit.** AI uses these words frequently, but they are correct in some sentences: additionally, align with, crucial, emphasize, enduring, enhance, garner, highlight (verb), interplay, key (adjective), landscape (abstract), pivotal, showcase, testament, underscore, valuable, vibrant. Remove them when they add no meaning. One *however* is not an AI pattern.
 
-**"The part that."** "The part that makes it work," "the part that matters," "the part that took longest," "the part nobody talks about," "the part I keep coming back to." The frame delays the claim and implies everything else was filler. Say the claim outright: "It works because a separate agent grades the output." Cut the frame even when the sentence after it is true and useful. Plain uses of "part" are fine ("the second part of the migration").
+**Adverbs that frequently add no meaning:** just, literally, honestly, simply, actually, truly, fundamentally, importantly, crucially, inherently, inevitably. Remove them when they add nothing. Keep them when they give emphasis, contrast, uncertainty, or spoken rhythm.
 
-**Signposting.** "Let's dive in," "let's break this down," "here's what you need to know," "now let's look at." Announcing what you're about to do instead of doing it.
+**Phrases that frequently add no meaning:** it's worth noting, it's important to note, at the end of the day, when it comes to, at its core, in today's world, in the age of, in the world of, the reality is, the truth is, in terms of, with regard to, in order to, going forward, in this article, let's dive in, the real question is, what really matters. Remove them when they delay the main idea. If one is a known part of the writer's voice, you can keep it sometimes.
 
-**Colon reveals.** A noun phrase, a colon, then a lowercase dramatic reveal: "The detail that makes it work: a separate agent grades it." Rewrite as a plain sentence. Use colons for lists, labels, and quotes. Prefer sentence case after a colon unless grammar, a proper noun, a title, or code requires otherwise.
+**Long phrases with a short equivalent:**
 
-**Superficial `-ing` analysis.** Trailing participle clauses that pretend to explain meaning: "highlighting," "underscoring," "reflecting," "showcasing," "ensuring," "fostering." Replace with the actual consequence: "The launch adds file search, so users can find old drafts without leaving the editor."
+| Long phrase | Short equivalent |
+|---|---|
+| in order to achieve this goal | to achieve this |
+| due to the fact that | because |
+| at this point in time | now |
+| in the event that | if |
+| has the ability to | can |
 
-**Importance puffery.** "Stands as a testament," "marks a pivotal moment," "plays a vital role," "underscores its significance," "reflects a broader shift," "setting the stage for." State the fact and let the reader judge.
+## Patterns to remove
 
-**Weasel attribution.** "Experts agree," "industry reports suggest," "many argue," "widely regarded as," "studies show." Name the source or cut the claim. If the user has no source, ask. Never invent one.
+**Binary contrasts.** "This is not X. It's Y." / "The question isn't X, it's Y." / "It's not just X but Y." Write Y directly. Keep the contrast only if it is real and necessary for the argument. If a page has more than one or two, some of them are only decoration.
 
-**Speculative gap-filling.** When a fact isn't available, models write a paragraph about not finding it and then invent plausible filler: "maintains a low profile," "keeps personal details private," "likely grew up," "it is believed that," "as of my last update." Say what isn't known, or cut the sentence.
+**Tailing negations.** Short fragments attached to the end of a sentence: "no guessing," "no wasted motion." Write a full clause, or remove the fragment.
 
-**Fake-strong verbs (copula avoidance).** "Serves as," "stands as," "boasts," "features," "represents." Prefer "is" and "has" when they're clearer. "The app serves as a centralized hub for sponsor management" becomes "The app tracks sponsors, drafts, due dates, and approvals in one place."
+**Negative listing.** "Not a X. Not a Y. A Z." Write only Z.
 
-**Synonym cycling.** If the clear word is right, repeat it. "The agent reviews the draft. The assistant scores the piece. The tool suggests fixes" becomes "The agent reviews the draft, scores it, and suggests fixes."
+**Throat-clearing openers.** "Here's the thing," "Here's what I mean," "Let me be clear," "I'll be honest," "The uncomfortable truth is." Remove the opener. Write the main idea.
 
-**Rule-of-three triads.** Ideas forced into groups of three to sound comprehensive. Keep the items that are real; drop the one added for rhythm.
+**Conversational fake-candor.** "Honestly?" "Look," "Real talk," "Let's be honest" as a separate, dramatic pause before a usual claim. The problem is the pause before the claim, not the word. "Honestly" in the middle of a sentence is correct.
 
-**False ranges.** "From X to Y" where X and Y aren't ends of a real scale. "From the Big Bang to the dance of dark matter" becomes a plain list of what's actually covered.
+**Faux-insight setups.** "This is the part most people skip," "What nobody tells you," "The part everyone misses." These phrases make the writer seem to be the only expert. Remove the setup. Keep the claim.
 
-**Aphorism formulas.** "X is the language of Y," "X becomes a trap," "the currency of," "the architecture of." Replace the formula with the concrete claim it's gesturing at.
+**"The part that."** "The part that makes it work," "the part that matters," "the part that took longest," "the part nobody talks about," "the part I keep coming back to." This frame delays the claim and tells the reader that all other text was filler. Write the claim directly: "It works because a separate agent grades the output." Remove the frame also when the sentence after it is true and useful. A plain use of "part" is correct ("the second part of the migration").
 
-**Dramatic fragmentation.** "X. And Y. And Z." or "That's it. That's the whole thing." A single short sentence for emphasis is fine; a run of them is engineered drama.
+**Signposting.** "Let's dive in," "let's break this down," "here's what you need to know," "now let's look at." These phrases tell the reader what the text will do. Do the thing. Do not announce it.
 
-**Robotic rhythm.** Repeated sentence patterns and identical paragraph builds. Also watch the de-slopping tic: alternating one short punchy line with one long line in every paragraph is its own metronome. Aim for genuine unevenness. Read it aloud.
+**Colon reveals.** A noun phrase, a colon, and then a dramatic statement in lowercase: "The detail that makes it work: a separate agent grades it." Write a plain sentence. Use colons for lists, labels, and quotes. After a colon, use sentence case. Exceptions are grammar, a proper noun, a title, and code.
 
-**Rhetorical setups.** "What if I told you," "Think about it:", "Plot twist:", and self-answered "Question? Answer." pairs.
+**Superficial `-ing` analysis.** A participle clause at the end of a sentence that seems to explain the meaning: "highlighting," "underscoring," "reflecting," "showcasing," "ensuring," "fostering." Replace it with the real result: "The launch adds file search, so users can find old drafts without leaving the editor."
 
-**Fake-profound kickers.** The final "deep" line that turns the point into a metaphor or mic-drop. **Delete it.** Do not rewrite it into a better metaphor and do not preserve its rhythm. End on the clearest concrete sentence already in the draft.
+**Importance puffery.** "Stands as a testament," "marks a pivotal moment," "plays a vital role," "underscores its significance," "reflects a broader shift," "setting the stage for." Write the fact. The reader can decide if it is important.
 
-**Summary-recap endings.** "In conclusion," "Ultimately," "Overall," "The future looks bright," or a final paragraph restating the piece. The reader was just there.
+**Weasel attribution.** "Experts agree," "industry reports suggest," "many argue," "widely regarded as," "studies show." Name the source, or remove the claim. If the user has no source, ask. Never make up a source.
 
-**Fragmented headers.** A heading followed by a one-line paragraph that restates the heading before the real content starts. Cut the warm-up line.
+**Speculative gap-filling.** When a fact is not available, a model writes about the fact that it cannot find. Then it adds possible but false text: "maintains a low profile," "keeps personal details private," "likely grew up," "it is believed that," "as of my last update." Write what is not known, or remove the sentence.
 
-**Diff-anchored writing.** Docs or comments that narrate a change instead of describing the thing as it is. "This function was added to replace the old approach" becomes "This function uses a hash map for O(1) lookups." Exception: changelogs, release notes, and migration guides are legitimately version-scoped.
+**Fake-strong verbs (copula avoidance).** "Serves as," "stands as," "boasts," "features," "represents." Use "is" and "has" when they are clearer. "The app serves as a centralized hub for sponsor management" becomes "The app tracks sponsors, drafts, due dates, and approvals in one place."
 
-**Formatting slop.** Emoji in headings, bold sprinkled mid-sentence, bullet lists where two sentences of prose read better, inline-header bullets ("**Performance:** Performance has improved"), headers over two-sentence sections, title case in headings (use sentence case), curly quotes when the surrounding document uses straight ones. Format should follow the content, not decorate it.
+**Synonym cycling.** If the clear word is correct, use it again. "The agent reviews the draft. The assistant scores the piece. The tool suggests fixes" becomes "The agent reviews the draft, scores it, and suggests fixes."
 
-**Chatbot artifacts.** "I hope this helps," "Certainly!", "You're absolutely right," "Would you like me to," "Let me know if." Correspondence pasted in as content. Cut entirely.
+**Rule-of-three triads.** Ideas in groups of three only to sound complete. Keep the real items. Remove the item that the writer added only for rhythm.
 
-**Em dashes.** Do not use them as a default rhythm crutch. In short copy, none. In longer drafts, one or two are fine when they clearly beat a comma, period, colon, or parentheses. Remove clusters and decorative dashes. Also catch spaced hyphens (` -- `) used the same way. Before returning, scan the output for `—` and `–` and count them. Overridden by a user writing sample (see Voice calibration).
+**False ranges.** "From X to Y" where X and Y are not the two ends of a real scale. "From the Big Bang to the dance of dark matter" becomes a plain list of the real topics.
 
-**Hyphenated pair overuse.** Keep hyphens in attributive position ("a high-quality report"), drop them after the noun ("the report is high quality"). Applies to data-driven, real-time, long-term, end-to-end, cross-functional, well-known.
+**Aphorism formulas.** "X is the language of Y," "X becomes a trap," "the currency of," "the architecture of." Replace the formula with the concrete claim.
 
-## Before you cut: false positives
+**Dramatic fragmentation.** "X. And Y. And Z." or "That's it. That's the whole thing." One short, complete sentence for emphasis is correct. A series of short sentences is artificial drama. Fragments are never correct outside quotes (refer to Sentence rules).
 
-Read `references/false-positives.md` before an aggressive edit or any detect pass. It lists what is **not** evidence of AI (perfect grammar, formal vocabulary, curly quotes alone, a single em dash, one short emphatic sentence, mixed registers) and the signs of human writing you should actively preserve.
+**Robotic rhythm.** The same sentence pattern again and again, and paragraphs that all have the same structure. Also look for a problem that edits of AI text cause: one short line, then one long line, in every paragraph. That is also a regular rhythm. Make the sentence lengths truly irregular. Read the text aloud.
 
-The short version: look for **clusters** of tells, not isolated ones. A single em dash means nothing. Em dashes plus a triad plus "vibrant tapestry" plus a Conclusion section is a confession.
+**Rhetorical setups.** "What if I told you," "Think about it:", "Plot twist:", and a question that the writer answers immediately.
 
-## The iron rule
+**Fake-profound kickers.** The last line that tries to sound deep. It changes the main idea into a metaphor or a dramatic final statement. **Delete it.** Do not rewrite it as a better metaphor. Do not keep its rhythm. End the text on the clearest concrete sentence that is already in the draft.
 
-A voice pass never changes facts, numbers, or claims, and never invents them. The edited draft must contain no fact, name, number, date, quote, or citation absent from the source. Swapping a vague claim for a specific one is allowed only when the specific comes from the source or the user; otherwise ask, or write the plain version without it. If an edit would alter what the text asserts, that's a content decision. Flag it in What changed; don't fold it in silently.
+**Summary-recap endings.** "In conclusion," "Ultimately," "Overall," "The future looks bright," or a last paragraph that repeats the text. The reader read that text a short time before. Remove the ending.
 
-**This includes fabricated humanity.** An invented confession ("we got this wrong at first" when nothing was), a decorative hedge, a plausible-sounding number, or a manufactured one-word paragraph is a fabrication. Planted humanity reads as fake within a paragraph. Preserve these traits where they are true; never add them.
+**Fragmented headers.** A heading with a one-line paragraph that repeats the heading before the real content. Remove that line.
 
-## Workflow
+**Diff-anchored writing.** A document or a code comment that describes a change instead of the current item. "This function was added to replace the old approach" becomes "This function uses a hash map for O(1) lookups." Exception: changelogs, release notes, and migration guides must describe versions.
 
-1. Read the full draft before editing.
-2. Identify the core point and three to five voice signals to preserve: vocabulary, cadence, bluntness, humor, uncertainty, digressions. Keep this note internal. If you can't identify the core point, ask.
-3. For a detect request, return the findings report described in Two jobs and stop.
-4. For an edit, make the minimum effective changes, then check the result against `eval.md` yourself. Do not spawn a separate evaluator agent.
-5. If any check fails, fix the draft and run the checks again.
-6. Output per the invocation mode: full edited draft plus a short **What changed** section (pasted text), a What changed summary only (file mode), or the bare text (embedded).
+**Formatting slop.** Remove these problems:
+
+- emoji in headings
+- bold text in the middle of sentences
+- bullet lists where two sentences of prose are easier to read
+- inline-header bullets ("**Performance:** Performance has improved")
+- headings above sections of two sentences
+- title case in headings (use sentence case)
+- curly quotes when the document around them uses straight quotes
+
+The format must follow the content. The format is not decoration.
+
+**Chatbot artifacts.** "I hope this helps," "Certainly!", "You're absolutely right," "Would you like me to," "Let me know if." Also correspondence pasted into the content. Remove all of them.
+
+**Em dashes.** Do not use em dashes as a usual rhythm. In short text, use none. In longer drafts, one or two are correct if they are clearly better than a comma, period, colon, or parentheses. Remove groups of em dashes and em dashes that are only decoration. Also find spaced double hyphens (` -- `) with the same function. Before you give the result, find all `—` and `–` characters in it and count them. A writing sample from the user has priority over this rule (refer to Voice calibration).
+
+**Hyphenated pair overuse.** Keep the hyphen before a noun ("a high-quality report"). Remove the hyphen after the noun ("the report is high quality"). This rule applies to data-driven, real-time, long-term, end-to-end, cross-functional, and well-known.
+
+## False positives
+
+Read `references/false-positives.md` before a large edit and before each detect task. The file lists the things that are **not** evidence of AI, and the signs of human writing that you must keep. These things are not evidence alone: perfect grammar, formal vocabulary, curly quotes, one em dash, and one short sentence for emphasis. A mix of registers is also not evidence.
+
+Find **groups** of AI patterns. Do not act on one pattern alone. One em dash is not evidence. Em dashes, a triad, "vibrant tapestry," and a Conclusion section together are strong evidence.
+
+## The fact rule
+
+An edit for voice never changes or adds facts, numbers, or claims. The edited draft must not contain a fact, name, number, date, quote, or citation that is not in the source. You can replace a vague claim with a specific claim only if the source or the user gives the specific information. If not, ask the user, or write the plain version without the specific information. If an edit changes what the text says, that is a decision about content. Identify the change in What changed. Do not include it silently.
+
+**This rule also applies to invented human traits.** These are examples of invented content:
+
+- an admission that is not true ("we got this wrong at first" when nothing went wrong)
+- a hedge that is only decoration
+- a number that sounds correct but has no source
+- a one-sentence paragraph that you add for effect
+
+A reader quickly sees that added human traits are false. Keep these traits where they are true. Never add them.
+
+## Procedure
+
+1. Read the full draft before you edit it.
+2. Find the main idea.
+3. Find three to five voice signals to keep, for example vocabulary, rhythm, directness, humor, uncertainty, or digressions. Do not show this list to the user.
+4. If you cannot find the main idea, ask the user.
+5. If the task is a detect task, give the report that "Two tasks" describes. Stop.
+6. If the task is an edit, make the minimum effective changes. Apply all the sentence rules.
+7. Examine the result with the checks in `eval.md`. Do this yourself. Do not start a separate evaluation agent.
+8. If a check fails, correct the draft. Then do all the checks again.
+9. Give the output for the invocation mode:
+   - Pasted text: the full edited draft and a short **What changed** section.
+   - File mode: only the What changed summary.
+   - Embedded mode: only the edited text.
 
 ## References
 
-- `references/false-positives.md` — what is not an AI tell, and the human-writing signals to preserve. Load before any detect pass or aggressive edit.
-- `eval.md` — pass/fail checks to run on your own edit before returning it.
+- `references/false-positives.md`: the things that are not AI patterns, and the signs of human writing to keep. Read it before each detect task and each large edit.
+- `eval.md`: pass or fail checks for your edit. Do these checks before you give the edit to the user.
