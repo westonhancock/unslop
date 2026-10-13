@@ -1,100 +1,112 @@
 # Unslop
 
-An agent skill that edits drafts into sharper, more human writing without flattening the writer's voice. It can also detect AI-slop patterns without rewriting anything.
+Unslop is an agent skill. It edits a draft to make the text clearer and more human, and it keeps the voice of the writer. It can also find AI-slop patterns in a draft without a rewrite.
 
-It is plain Markdown, so it runs in any harness that loads skill-style instructions: Claude Code, Codex, OpenCode, and others.
+The skill is plain Markdown. It works in each harness that reads skill instructions, for example Claude Code, Codex, and OpenCode.
 
-## What it catches
+## What it finds
 
-If writing feels vaguely off and you can't say why, it's usually one of these. Each row is a real pattern, what it sounds like, and what it should have said.
+If a text seems wrong and you cannot say why, the cause is usually one of the patterns below. Each row gives a pattern, an example, and a better version.
 
-### Sounds deep, says nothing
+### Text that sounds deep but says nothing
 
-| Pattern | It sounds like | Better |
+| Pattern | Example | Better |
 |---|---|---|
 | Not X, it's Y | "This isn't a feature. It's a philosophy." | "The feature saves about an hour a week." |
 | Fake-deep closer | "In the end, the best tool is the one you actually use." | Stop at your last real point. |
-| Big-deal puffery | "The launch marks a pivotal moment for the company." | "It's the company's first paid product." |
-| The fancy metaphor | "Trust is the currency of remote teams." | "Remote teams fall apart when people stop believing each other." |
+| Big-deal puffery | "The launch marks a pivotal moment for the company." | "It is the company's first paid product." |
+| The fancy metaphor | "Trust is the currency of remote teams." | "Remote teams fail when people stop trusting each other." |
 | Trailing "-ing" filler | "We added search, highlighting our commitment to users." | "We added search, so you can find old drafts without leaving the page." |
 
-### Stalling before the point
+### Text that delays the main idea
 
-| Pattern | It sounds like | Better |
+| Pattern | Example | Better |
 |---|---|---|
-| Throat-clearing | "Here's the thing. Let me be clear." | Say the thing. |
-| Announcing | "Let's dive in. Here's what you need to know." | Just start. |
-| Secret-knowledge setup | "What nobody tells you about pricing..." | "Most teams price too low at launch." |
+| Throat-clearing | "Here's the thing. Let me be clear." | Write the main idea. |
+| Announcing | "Let's dive in. Here's what you need to know." | Start with the content. |
+| Secret-knowledge setup | "What nobody tells you about pricing..." | "Most teams set prices too low at launch." |
 | The part that | "The part that makes it work is the eval file." | "It works because a separate agent grades the output." |
 | The dramatic colon | "The best part: it learns." | "It gets better the more you use it." |
-| Fake candor | "Honestly? It depends." | "It depends on how often you'll use it." |
+| Fake candor | "Honestly? It depends." | "The answer depends on how often you will use it." |
 
-### Vague where it should be specific
+### Text that is vague where it must be specific
 
-| Pattern | It sounds like | Better |
+| Pattern | Example | Better |
 |---|---|---|
-| Nobody said it | "Experts agree. Studies show." | Name the study, or drop the claim. |
-| Dressed-up "is" | "The app serves as a centralized hub." | "The app tracks sponsors and due dates in one place." |
-| Guessing out loud | "While details are limited, she likely grew up..." | "Her early life isn't documented." |
+| No source | "Experts agree. Studies show." | Name the study, or remove the claim. |
+| Decorated "is" | "The app serves as a centralized hub." | "The app tracks sponsors and due dates in one place." |
+| Guessing | "While details are limited, she likely grew up..." | "Her early life is not documented." |
 | Abstraction | "The integration improved efficiency." | "The integration cut deploy time from 40 minutes to 4." |
 
-### The rhythm gives it away
+### Rhythm that shows AI
 
-| Pattern | It sounds like | Better |
+| Pattern | Example | Better |
 |---|---|---|
 | Everything in threes | "Fast, simple, and powerful." | Keep the two that are true. |
-| Word-swapping | "The agent reviews it. The assistant scores it. The tool suggests fixes." | "The agent reviews it, scores it, and suggests fixes." |
-| Fragment drama | "That's it. That's the whole thing." | Write the sentence. |
-| Wrap-up ending | "In conclusion, ultimately, overall..." | The reader was just there. Cut it. |
-| Em dash flood | "The plan, ambitious and untested, launches Friday." | A comma, period, or parentheses usually reads better. |
+| Synonym changes | "The agent reviews it. The assistant scores it. The tool suggests fixes." | "The agent reviews it, scores it, and suggests fixes." |
+| Fragment drama | "That's it. That's the whole thing." | Write a complete sentence. |
+| Summary ending | "In conclusion, ultimately, overall..." | Remove it. The reader read the text a short time before. |
+| Too many em dashes | "The plan, ambitious and untested, launches Friday." | A comma, period, or parentheses is usually better. |
 
-### Words that give it away
+### Sentence rules
+
+The skill applies these rules to each draft. A writing sample does not change them. Text in quotation marks is the only exception.
+
+| Rule | Example | Better |
+|---|---|---|
+| No fragments | "We shipped it Friday. On time." | "We shipped it Friday, on time." |
+| 25 words or fewer in each sentence | A 40-word spoken sentence | Two or three shorter sentences |
+| No phrasal verbs | "We need to find out why." | "We need to learn why." |
+| No contractions | "It doesn't scale." | "It does not scale." |
+| Clear pronouns | "The API calls the cache, and it fails." | "The API calls the cache, and the cache fails." |
+
+### Words that show AI
 
 delve, leverage, utilize, foster, robust, seamless, streamline, empower, cutting-edge, tapestry, realm, paradigm shift, game changer, meticulous, transformative, elevate, harness, ever-evolving, this changes everything.
 
-Two more are handled differently, because they are real words a writer may legitimately own: **idempotent** and **defensible**. The skill will never introduce them into your draft, and it will never touch them if you wrote them yourself. Where a model would reach for one, write the plain version: "running it twice is safe," or "this holds up under scrutiny."
+The skill uses a different rule for two words: **idempotent** and **defensible**. These are real words, and a writer can use them correctly. The skill never adds them to your draft. If you wrote them, the skill does not change them. Where a model wants to use one of them, the skill writes the plain version: "running it twice is safe," or "this holds up under scrutiny."
 
-**shape** is banned only as a metaphor. A process, an offering, or a strategy has no shape, so name what you mean: the structure, the sequence, the steps, the layout. Literal shapes, geometry, and visual design keep the word.
+The skill prohibits **shape** only as a metaphor. A process, a product, or a strategy has no shape. Name the real thing: the structure, the sequence, the steps, or the layout. Physical shapes, geometry, and visual design can use the word.
 
-Plus: emoji headings, bold sprinkled mid-sentence, bullet lists where two sentences would do, "I hope this helps," and a dozen more in `SKILL.md`.
+The skill also finds emoji in headings, bold text in the middle of sentences, and bullet lists where two sentences are better. It finds "I hope this helps" and more than ten other patterns. `SKILL.md` lists all of them.
 
-## Install
+## Installation
 
-Paste this into Claude Code, Codex, or another harness:
+Paste this text into Claude Code, Codex, or a different harness:
 
 > Install this skill globally: https://github.com/westonhancock/unslop
 
-Or clone it into wherever your harness keeps skills:
+You can also clone the repository into the skills directory of your harness:
 
 ```bash
 git clone https://github.com/westonhancock/unslop.git ~/.claude/skills/unslop
 ```
 
-## Why another one
+## Why another skill
 
-Unslop borrows from two existing skills and resolves the place where they disagree.
+Unslop uses parts of two other skills. Where the two skills disagree, Unslop chooses one rule.
 
-[no-ai-slop](https://github.com/petergyang/no-ai-slop) is a disciplined line editor. Its governing rule is the minimum effective edit, and it checks its own work against an external eval file. Its weakness is coverage and the absence of any brake on false positives.
+[no-ai-slop](https://github.com/petergyang/no-ai-slop) is a careful line editor. Its main rule is the minimum effective edit, and it examines its own work with an eval file. It has two weak points: it finds fewer patterns, and it has no rule against false positives.
 
-[humanizer](https://github.com/blader/humanizer) is a port of [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), with 33 numbered patterns, a strong false-positive list, and file and embedded invocation modes. Its weakness is a deletion bias: run it hard and it compresses distinctive prose into something correct and voiceless.
+[humanizer](https://github.com/blader/humanizer) is a version of [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). It has 33 numbered patterns, a strong list of false positives, and a file mode and an embedded mode. Its weak point is that it removes too much. If you use it on a draft with a strong voice, the result is correct but has no voice.
 
-Unslop keeps no-ai-slop's restraint and eval loop, adds humanizer's pattern coverage, false-positive discipline, invocation modes, and voice calibration, and adds two rules neither has.
+Unslop keeps the careful edit and the eval file from no-ai-slop. From humanizer, it takes the pattern list, the false-positive rules, the invocation modes, and the voice calibration. It also adds two rules that neither skill has.
 
-## The two additions
+## The two new rules
 
-**Fabricated humanity is a fabrication.** Most skills list the signals of human writing (hedges, confessed errors, specific numbers, asides) and tell the model to preserve them. That list is one prompt away from becoming a generation target. Unslop frames it as *preserve when true, never add*. An invented confession or a decorative hedge reads as fake within a paragraph, and it is the next tell after the current ones get scrubbed.
+**Invented human traits are fabrications.** Most skills list the signs of human writing (hedges, admitted errors, specific numbers, comments in parentheses). They tell the model to keep these signs. A model can easily misread that list as a list of traits to add. Unslop says to keep these traits only when they are true, and never to add them. Readers quickly see that an invented admission or a decorative hedge is false. These invented traits will become the next AI pattern after editors remove the current patterns.
 
-**De-slopping has its own texture.** Alternating one short punchy line with one long line in every paragraph is a metronome, same as the thing it replaced. The eval checks for it explicitly, and the false-positive reference ends with an over-scrub check: does this read like the writer, or like a de-slopped draft?
+**Edited AI text has its own style.** In some edited drafts, each paragraph has one short line and then one long line. That regular rhythm is as mechanical as the original AI text. The eval file has a check for this rhythm. The false-positive reference ends with a check for too much edit: does the result read like the writer, or like an edited AI draft?
 
-## What it refuses to do
+## What it does not do
 
-Guess whether AI wrote something. Detect mode names the pattern, quotes the line, and gives the fix. It does not score the draft or claim authorship. Detectors guess; named patterns are evidence you can check.
+The skill does not guess if AI wrote a text. Detect mode names each pattern, quotes the line, and gives the correction. The skill does not give a score and does not say who wrote the text. AI detectors only guess. A named pattern is evidence that you can examine.
 
-Change facts. A voice pass never alters or invents a fact, number, date, quote, source, or citation. An edit that changes what the text asserts is a content decision, and it gets flagged rather than folded in.
+The skill does not change facts. An edit for voice never changes or adds a fact, number, date, quote, source, or citation. If an edit changes what the text says, the edit is a decision about content. The skill identifies that change and does not include it silently.
 
-## Use
+## Usage
 
-**Edit a draft.** Paste it and invoke the skill. You get the edited draft and a short What changed section.
+**Edit a draft.** Paste the draft and start the skill. The result is the edited draft and a short What changed section.
 
 ```
 /unslop
@@ -102,7 +114,7 @@ Change facts. A voice pass never alters or invents a fact, number, date, quote, 
 [your draft]
 ```
 
-**Detect without rewriting.**
+**Find patterns without a rewrite.**
 
 ```
 /unslop is this AI slop?
@@ -110,13 +122,13 @@ Change facts. A voice pass never alters or invents a fact, number, date, quote, 
 [the text]
 ```
 
-**Edit a file in place.** Prose only; code blocks, frontmatter, and link targets are left alone.
+**Edit a file.** The skill edits only prose. It does not change code blocks, frontmatter, or link targets.
 
 ```
 /unslop clean up the prose in docs/launch-post.md
 ```
 
-**Match your voice.** Give it a sample of your own writing and it matches your habits, overriding every style rule in the skill including the em dash guidance.
+**Match your voice.** Give a sample of your writing. The skill matches your habits. The sample has priority over all style rules in the skill, and also over the em dash rule. The sentence rules are the exception.
 
 ```
 /unslop here's a sample of how I write: [sample]
@@ -126,12 +138,12 @@ Now edit this draft: [draft]
 
 ## Files
 
-| File | What it is |
+| File | Contents |
 |---|---|
-| `SKILL.md` | The editing rules, patterns, and workflow |
-| `eval.md` | Pass/fail checks the skill runs on its own edit before returning it |
-| `references/false-positives.md` | What is not an AI tell, and the human signals to preserve |
+| `SKILL.md` | The rules, the patterns, and the procedure |
+| `eval.md` | Pass or fail checks that the skill does on its edit before it gives the result |
+| `references/false-positives.md` | The things that are not AI patterns, and the human signs to keep |
 
 ## License
 
-MIT. The pattern catalog draws on [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) by WikiProject AI Cleanup, and on the MIT-licensed [no-ai-slop](https://github.com/petergyang/no-ai-slop) and [humanizer](https://github.com/blader/humanizer).
+MIT. The pattern list uses content from [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) by WikiProject AI Cleanup. It also uses content from [no-ai-slop](https://github.com/petergyang/no-ai-slop) and [humanizer](https://github.com/blader/humanizer), which both have the MIT license.
